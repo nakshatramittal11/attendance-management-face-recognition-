@@ -1,0 +1,31 @@
+import os
+import csv
+
+def attendance_perecentage():
+    total_days=os.listdir('attendance')
+    total_days=len(total_days)
+    name_attendance=dict()
+    total_attendance=[]
+
+    total_faces=os.listdir('face_dataset')
+    faces=[]
+    for fx in total_faces:
+        faces.append(os.path.splitext(fx)[0])
+
+    with open('students_attendance_perecentage.csv','w') as sap:
+        with open('attendance_list.csv','r') as al:
+            attendace_list=al.readlines()
+            attendace_list.pop(0)
+            for fx in attendace_list:
+                x=fx.split(',')
+                total_attendance.append(x[0])
+            for fx in total_attendance:
+                name_attendance[fx]=str(round(total_attendance.count(fx)*100/total_days, 2))+ '%'
+            for fx,yz in name_attendance.items():
+                sap.writelines(f'{fx},{yz}\n')
+                al.flush()
+            # print(name_attendance)
+
+
+
+attendance_perecentage()
